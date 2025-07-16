@@ -1,0 +1,181 @@
+This README file provides a comprehensive overview of the project, suitable for a GitHub repository.
+
+---
+
+# Luna Chatbot
+
+## Table of Contents
+
+*   [Introduction](#introduction)
+*   [Features](#features)
+*   [Installation](#installation)
+    *   [Prerequisites](#prerequisites)
+    *   [Setup Steps](#setup-steps)
+*   [Usage](#usage)
+*   [Project Structure](#project-structure)
+*   [Customization and Extension](#customization-and-extension)
+*   [Contributing](#contributing)
+*   [License](#license)
+*   [Contact](#contact)
+
+## Introduction
+
+Luna Chatbot is a desktop-based conversational AI application built using Python's `tkinter` for the graphical user interface and `PyTorch` for the natural language processing (NLP) model. It's designed to be a personal assistant capable of performing various tasks like opening applications, searching the web, playing music, and answering general knowledge questions based on a predefined set of intents.
+
+## Features
+
+*   **Conversational Interface**: Interact with Luna through a user-friendly chat window.
+*   **Application Launching**: Open common Windows applications such as Chrome, Camera, Mail, Calendar, Maps, Edge, Paint, Photos, Settings, and Security.
+*   **Web Search Integration**:
+    *   Perform general web searches using Google.
+    *   Retrieve summaries from Wikipedia.
+    *   Search and play videos on YouTube.
+*   **System Utilities**: Empty the recycle bin.
+*   **Music Playback**: Play local music files (MP3, WAV, AVI formats) from a designated `music` directory.
+*   **General Knowledge**: Respond to queries based on predefined intents, including:
+    *   Greetings
+    *   Self-introduction and creator information
+    *   Jokes and motivational quotes
+    *   Help and functional capabilities
+    *   Abbreviations (e.g., ASAP, FYI, LOL)
+    *   Basic math concepts (e.g., Pythagorean theorem, calculus)
+    *   Science facts (e.g., theory of relativity, photosynthesis)
+    *   Historical events/figures (e.g., Albert Einstein, French Revolution)
+    *   Study tips
+    *   Job interview tips
+*   **Intelligent Responses**: Utilizes a neural network model to understand user input and provide relevant responses.
+
+## Installation
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+*   **Python**: Version 3.10 or 3.11 (due to `cpython` bytecode files).
+*   **pip**: Python package installer.
+*   **PyTorch**: Compatible with your system (CPU or GPU).
+*   **NLTK**: Natural Language Toolkit.
+
+### Setup Steps
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/your-username/luna-chatbot.git
+    cd luna-chatbot
+    ```
+
+2.  **Create a virtual environment (recommended):**
+
+    ```bash
+    python -m venv venv
+    # On Windows
+    .\venv\Scripts\activate
+    # On macOS/Linux
+    source venv/bin/activate
+    ```
+
+3.  **Install the required Python packages:**
+
+    ```bash
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu # Or use your specific CUDA version if you have a GPU
+    pip install wikipedia youtube-search googlesearch-python pywhatkit winshell
+    pip install nltk
+    ```
+
+4.  **Download NLTK data:**
+
+    Run the following Python code to download necessary NLTK data:
+
+    ```python
+    import nltk
+    nltk.download('punkt')
+    ```
+    *(Note: The `nltk_utils.py` file has a hardcoded path `E:\nltk-develop\nltk\tokenize`. You might need to adjust this path or ensure `nltk.download('punkt')` correctly places the necessary data for `nltk.word_tokenize` to function.)*
+
+5.  **Prepare the `intents.json` and `data.pth` files:**
+
+    *   Ensure `intents.json` is present in the root directory. This file defines the chatbot's conversational capabilities.
+    *   The `data.pth` file contains the trained model. If you don't have it, you'll need to train the model first.
+
+6.  **Train the model (if `data.pth` is missing or you want to retrain):**
+
+    Run the `train.py` script:
+
+    ```bash
+    python train.py
+    ```
+    This will generate the `data.pth` file, which is essential for the chatbot's functionality.
+
+7.  **Create a `music` directory (optional):**
+
+    If you want to use the music playback feature, create a folder named `music` in the root directory of the project and place your `.mp3`, `.wav`, or `.avi` files inside it.
+
+    ```bash
+    mkdir music
+    ```
+
+## Usage
+
+To start the Luna Chatbot, simply run the `app.py` script:
+
+```bash
+python app.py
+```
+
+A chat window titled "Luna chatbot" will appear. You can type your messages in the entry box at the bottom and press Enter or click the "Send" button to interact with Luna.
+
+**Example Interactions:**
+
+*   "Hi Luna"
+*   "What can you do?"
+*   "Open chrome"
+*   "Search for Albert Einstein"
+*   "Play despacito on youtube" (This will open a browser and search for the video)
+*   "Tell me a joke"
+*   "What does ASAP mean?"
+*   "Empty recycle bin"
+*   "Play music" (If you have music files in the `music` directory)
+
+## Project Structure
+
+```
+.
+├── app.py                  # Main application file (Tkinter GUI)
+├── chat.py                 # Chatbot logic, intent handling, and external integrations
+├── data.pth                # Trained PyTorch model weights and metadata
+├── intents.json            # Defines chatbot intents, patterns, and responses
+├── model.py                # Neural network architecture for the chatbot
+├── nltk_utils.py           # Utility functions for NLP (tokenization, stemming, bag-of-words)
+├── train.py                # Script to train the chatbot model
+├── music/                  # Directory for local music files (optional)
+└── README.md               # This file
+```
+
+## Customization and Extension
+
+*   **Add New Intents**: Modify `intents.json` to add new conversational topics, patterns, and responses. After modifying, you must re-run `train.py` to update the model.
+*   **Integrate New Features**: Extend the `get_response` function in `chat.py` to add new functionalities (e.g., weather API integration, calendar management).
+*   **Change Bot Name**: Modify the `bot_name` variable in `chat.py`.
+*   **GUI Customization**: Adjust `app.py` to change the appearance or layout of the chat interface.
+
+## Contributing
+
+Contributions are welcome! If you have suggestions for improvements, new features, or bug fixes, please feel free to:
+
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/YourFeature`).
+3.  Make your changes.
+4.  Commit your changes (`git commit -m 'Add new feature'`).
+5.  Push to the branch (`git push origin feature/YourFeature`).
+6.  Open a Pull Request.
+
+## License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+## Contact
+
+For any questions or inquiries, please contact [Harini Jemima](mailto:your.email@example.com).
+
+---
